@@ -51,6 +51,8 @@ tbl_summary(
 ```
 
 ```{r}
+#| label: tbl-one
+#| tbl-cap: "This is a great table"
 tbl_summary(
   nlsy,
   by = sex_cat,
@@ -58,3 +60,39 @@ tbl_summary(
               eyesight_cat, glasses, age_bir))
 ```
 
+**@tbl-one shows the descriptive statistics**
+
+```{r}
+#| output: true
+median(nlsy$sleep_wknd, na.rm = TRUE)
+mn_sleep <- median(nlsy$sleep_wknd, na.rm = TRUE)
+```
+
+The participants slept `r mn_sleep` hours on weekends on average.
+
+The participants slept `r median(nlsy$sleep_wknd, na.rm = TRUE)` hours on weekends on average.
+
+```{r}
+table1 <- tbl_summary(
+  nlsy,
+  by = sex_cat,
+  include = c(sex_cat, race_eth_cat, region_cat,
+              eyesight_cat, glasses, age_bir))
+table1
+
+inline_text(table1, variable = "age_bir", column = "stat_1")
+```
+
+A greater proportion of female (`r inline_text(table1, variable = 'region_cat', level = 'South', column = 'stat_2')`) are from the south compared to males (`r inline_text(table1, variable = 'region_cat', level = 'South', column = 'stat_1')`).
+
+```{r}
+table2 <- tbl_summary(
+  nlsy,
+  by = sex_cat,
+  include = c(sleep_wknd)
+)
+
+table2
+```
+
+On average, males (`r inline_text(table2, variable = 'sleep_wknd', column = 'stat_1')`) and females (`r inline_text(table2, variable = 'sleep_wknd', column = 'stat_2')`) sleep the same amount of hours on weekends.
